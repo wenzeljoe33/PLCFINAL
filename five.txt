@@ -1,0 +1,39 @@
+G = VERS
+
+V = [<expr>, <first>, <second>, <third>, <fourth>, <fifth>, <sixth>, <seventh>, <eighth>, <variables>]
+E = ["0-9","A-Z","=","/=", "||","~|","&&" , "/" , "|" , ">" , "<" , "+" ,  "-" , "<=" , "*" , ">=" , "&", "++","--", "(", ")"]
+R = [ 
+      <expr> ==> <first> <variables>("++" | "--")<first>
+      <first> ==> <second> (("++"|"--")) <variables> <second>
+      <second> ==> <third> ("*"| ">=" | "&") <third>
+      <third> ==> <fourth> ("+"| "-" | "<=") <fourth>
+      <fourth> ==> <fifth> ("-" <variables> | "+" | <variables> | "&")<fifth>
+      <fifth> ==> <sixth> (">" | "<") <sixth>
+      <sixth> ==> <seventh> ("&&"| "/" | "|") <seventh>
+      <seventh> ==> <eighth> ("||"| "~|") <eighth>
+      <eighth> ==> <ninth> ("=" | "/=" ) <ninth>
+      <variables> ==> ("0-9" | "A-Z" | "(" <expr> ")")
+    ]
+S = <expr>
+
+
+
+
+
+++ ( prefix ), -- ( prefix )
+*, >= , &
++ , - , <=
+- ( unary ) , + ( unary ) , %
+> , <
+&&, /, !
+||, ˜| ( this symbol meant to be a tilde followed by a pipe )
+=, /=
+
+G = (V, Σ, R, S) where 
+	V = {<S>, <A>, <B>}
+	Σ = {0,1,2,3,4,5,6,7,8,9, +, -, *, /, % }
+	R = [ <S> = <A> { ( “+” | “-”) <A>}
+	         <A> = <B> { (“*”| “/”| “%”) <B>}
+	         <B> =  “0”| “1” |”2”|”3”|”4”|”5”|”6”|”7”|”8”|”9”
+		]
+	S = <S>
